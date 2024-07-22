@@ -57,7 +57,7 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="relative w-full max-w-xl p-4 bg-white rounded-lg shadow-md max-h-screen overflow-y-auto">
+            <div className="relative w-full max-w-xl p-4 bg-white rounded-lg shadow-md max-h-screen overflow-y-auto text-[#26394e]">
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
@@ -81,7 +81,7 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
                     <h1 className="text-2xl font-bold mb-2">Contact Us</h1>
                     <p className="hidden md:block text-gray-600">Unlock the full potential of your business with our tailored cloud-based software solutions.</p>
                 </div>
-                <hr className="mb-3" />
+                <hr className="mb-3 border-t border-[#eb3c00]" />
                 <form onSubmit={handleSubmit} className="w-full">
                     <div className="grid grid-cols-1 gap-6">
                         {/* Form fields */}
@@ -175,7 +175,7 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
                         </div>
 
                         <div className="col-span-1">
-                            <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded-md">
+                            <button type="submit" className="w-full p-2 bg-green-500 font-bold rounded-md">
                                 Send Message
                             </button>
                         </div>
