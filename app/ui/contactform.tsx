@@ -1,5 +1,4 @@
 import React, { FormEvent, useState } from 'react';
-import styles from './contactform.module.css';
 
 const ContactForm = ({ onClose }: { onClose: () => void }) => {
     const [formData, setFormData] = useState({
@@ -9,8 +8,8 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
         phone_number: '',
         company: '',
         message: '',
-        timeline: 'immediately',
-        heard_about: 'marketing',
+        // timeline: 'immediately',
+        // heard_about: 'marketing',
         contact_method: 'phone',
     });
 
@@ -43,8 +42,8 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
                     phone_number: '',
                     company: '',
                     message: '',
-                    timeline: 'immediately',
-                    heard_about: 'marketing',
+                    // timeline: 'immediately',
+                    // heard_about: 'marketing',
                     contact_method: 'phone',
                 });
             } else {
