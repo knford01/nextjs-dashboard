@@ -16,3 +16,13 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.wpli {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wpicon {
+  margin-right: 8px;
+}

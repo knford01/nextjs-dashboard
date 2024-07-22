@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { EnvelopeIcon, ArrowRightCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon, CloudIcon, RocketLaunchIcon, ArrowRightCircleIcon, XMarkIcon, ShoppingCartIcon, ComputerDesktopIcon, GlobeAltIcon, BookOpenIcon, TruckIcon, MapIcon, UserGroupIcon, CheckBadgeIcon } from '@heroicons/react/24/outline';
+import { Bars3BottomRightIcon } from '@heroicons/react/24/solid';
 import ContactForm from '@/app/ui/contactform';
 import '@/app/ui/background.css';
 
@@ -50,7 +51,7 @@ export default function Page() {
 
             {/* Centered Title */}
             <div className="flex-1 text-center">
-              <h1 className="text-2xl font-bold text-white">AR-Source Software</h1>
+              <h1 className="text-3xl font-bold text-white">AR-Source Software</h1>
               <hr className="my-2 border-t border-[#eb3c00] mx-auto" style={{ maxWidth: '15%' }} />
               <span className="text-lg italic text-white">Our Source For Software</span>
             </div>
@@ -115,8 +116,9 @@ export default function Page() {
           </div>
           {/* Text positioned at the top right of the image with a semi-transparent background on mobile */}
           <div className="absolute top-0 right-0 md:p-10 p-4 z-10 bg-black bg-opacity-80 md:bg-transparent rounded-lg">
-            <h2 className="text-4xl font-bold text-right text-white">Streamline Your Digital Transformation</h2>
-            <p className="text-2xl mt-4 font-semibold text-right text-white">With Our Suite Of Cloud-Based Software</p>
+            <h2 className="text-4xl font-bold text-center text-white">Start Your</h2>
+            <h2 className="text-4xl font-bold text-center text-white">Digital Transformation</h2>
+            <p className="text-2xl mt-4 font-semibold text-center text-white">With Our Suite Of Cloud-Based Software</p>
           </div>
         </section>
 
@@ -149,32 +151,33 @@ export default function Page() {
         </section>
 
         <section className="flex flex-col items-center mt-20 px-4 pb-20">
+
           <div className="w-full max-w-4xl bg-[#26394e] shadow-lg rounded-lg p-6">
-            <h3 className="text-2xl font-bold text-center text-white">Services</h3>
+            <h3 className="text-3xl font-bold text-center text-white">Services</h3>
             <hr className="my-4 border-t border-[#eb3c00]" />
-            <ul className="space-y-2 text-center">
-              <li className="text-white font-semibold">Cloud Migration Services</li>
-              <li className="text-white font-semibold">Custom Software Development</li>
-              <li className="text-white font-semibold">E-Commerce Solutions</li>
-              <li className="text-white font-semibold">EDI Integration</li>
-              <li className="text-white font-semibold">Shipping Label Generation and Package Tracking</li>
-              <li className="text-white font-semibold">Web Design & Development</li>
+            <ul className="md:text-xl space-y-2 text-center">
+              <li className="text-white font-semibold wpli"><CloudIcon className="wpicon h-5 w-5 mr-2" />Cloud Migration Services</li>
+              <li className="text-white font-semibold wpli"><ComputerDesktopIcon className="wpicon h-5 w-5 mr-2" />Custom Software Development</li>
+              <li className="text-white font-semibold wpli"><ShoppingCartIcon className="wpicon h-5 w-5 mr-2" />E-Commerce Solutions</li>
+              <li className="text-white font-semibold wpli"><Bars3BottomRightIcon className="wpicon h-5 w-5 mr-2" />EDI Integration</li>
+              <li className="text-white font-semibold wpli"><GlobeAltIcon className="wpicon h-5 w-5 mr-2" />Label Generation and Tracking</li>
+              <li className="text-white font-semibold wpli"><RocketLaunchIcon className="wpicon h-5 w-5 mr-2" />Web Design & Development</li>
             </ul>
           </div>
 
           <div className="w-full max-w-4xl bg-[#26394e] shadow-lg rounded-lg p-6 mt-10">
-            <h3 className="text-2xl font-bold text-center text-white">Software Suite</h3>
+            <h3 className="text-3xl font-bold text-center text-white">Software Suite</h3>
             <hr className="my-4 border-t border-[#eb3c00]" />
-            <ul className="space-y-2 text-center">
-              <li className="text-white font-semibold">Customer Relations Management</li>
-              <li className="text-white font-semibold">EDI Processing and Communication</li>
-              <li className="text-white font-semibold">GPS Tracking & Google Maps Integration</li>
-              <li className="text-white font-semibold">Human Relations Management</li>
-              <li className="text-white font-semibold">Warehousing and Inventory Management</li>
+            <ul className="md:text-xl space-y-2 text-center">
+              <li className="text-white font-semibold wpli"><BookOpenIcon className="wpicon h-5 w-5 mr-2" />Customer Relations Management</li>
+              <li className="text-white font-semibold wpli"><CheckBadgeIcon className="wpicon h-5 w-5 mr-2" />EDI Order Processing</li>
+              <li className="text-white font-semibold wpli"><MapIcon className="wpicon h-5 w-5 mr-2" />GPS Tracking</li>
+              <li className="text-white font-semibold wpli"><UserGroupIcon className="wpicon h-5 w-5 mr-2" />Human Relations Management</li>
+              <li className="text-white font-semibold wpli"><TruckIcon className="wpicon h-5 w-5 mr-2" />Warehousing Management</li>
             </ul>
           </div>
 
-          <button onClick={openContactForm} className="p-2 bg-[#26394e] text-white rounded-md mt-10 flex items-center">
+          <button onClick={openContactForm} className="p-2 bg-[#26394e] text-white rounded-md mt-10 flex text-center">
             <EnvelopeIcon className="h-5 w-5 mr-2" />
             Contact Us
           </button>
