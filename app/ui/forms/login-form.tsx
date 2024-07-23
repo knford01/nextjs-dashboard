@@ -6,7 +6,7 @@ import {
   KeyIcon,
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { ArrowRightIcon } from '@heroicons/react/20/solid';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from '../components/button';
 import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
@@ -16,11 +16,11 @@ export default function LoginForm() {
 
   return (
     <form action={dispatch} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+      <div className="flex-1 rounded-lg bg-gray-200 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
         </h1>
-        <div className="w-full">
+        <div className="w-full pb-2">
           <div>
             <label
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
@@ -62,6 +62,7 @@ export default function LoginForm() {
           </div>
         </div>
         <LoginButton />
+        {/* <ReturnButton /> */}
         <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
@@ -80,11 +81,17 @@ export default function LoginForm() {
 }
 
 function LoginButton() {
-  const { pending } = useFormStatus();
-
   return (
-    <Button className="mt-4 w-full" aria-disabled={pending}>
+    <Button className="mt-4 w-full hover:scale-105" style={{ backgroundColor: '#26394e' }}>
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
   );
 }
+
+// function ReturnButton(goBack) {
+//   return (
+//     <Button className="mt-4 w-full bg-red-500 hover:scale-105 hover:bg-red-700 text-white" onClick={goBack}>
+//       Return <ArrowLeftIcon className="ml-auto h-5 w-5" />
+//     </Button>
+//   );
+// }

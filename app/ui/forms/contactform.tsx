@@ -135,6 +135,7 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
                                     className="w-full p-2 border border-gray-300 rounded-md"
                                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                     onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('Please Match Format: ###-###-####')}
+                                    onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')}
                                     autoComplete="off"
                                     value={formData.phone_number}
                                     onChange={handleChange}
