@@ -21,7 +21,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
       params.delete('query');
     }
 
-    //updates the URL with the user's search data -- example: /dashboard/invoices?query=lee if the user searches for "Lee"\\
+    //updates the URL with the user's search data -- example: /navigation/invoices?query=lee if the user searches for "Lee"\\
     replace(`${pathname}?${params.toString()}`);
   }, 300);
 

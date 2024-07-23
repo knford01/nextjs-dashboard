@@ -1,4 +1,14 @@
-import SideNav from '@/app/ui/dashboard/sidenav';
+import SideNav from '@/app/ui/navigation/sidenav';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: {
+        template: '%s | AR-Source Dashboard',
+        default: 'AR-Source Software',
+    },
+    description: 'The official AR-Source Software Website.',
+    metadataBase: new URL('https://www.arsourcesoftware.com/'),
+};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
@@ -9,4 +19,4 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
         </div>
     );
-}
+}   
