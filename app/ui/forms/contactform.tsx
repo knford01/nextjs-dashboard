@@ -57,7 +57,7 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 m-2">
-            <div className="relative w-full max-w-xl p-4 bg-white rounded-lg shadow-md max-h-screen overflow-y-auto text-[#26394e]">
+            <div className="relative w-full max-w-xl p-4 bg-gray-100 rounded-lg shadow-md max-h-screen overflow-y-auto text-[#26394e]">
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
@@ -79,7 +79,7 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
                 </button>
                 <div className="mb-1 text-center">
                     <h1 className="text-2xl font-bold mb-2">Contact Us</h1>
-                    <p className="hidden md:block text-gray-600">Unlock the full potential of your business with our tailored cloud-based software solutions.</p>
+                    <p className="hidden font-semibold md:block text-gray-600">Unlock the full potential of your business with our custom tailored cloud-based software solutions</p>
                 </div>
                 <hr className="mb-3 border-t border-[#eb3c00]" />
                 <form onSubmit={handleSubmit} className="w-full">
@@ -175,7 +175,7 @@ const ContactForm = ({ onClose }: { onClose: () => void }) => {
                         </div>
 
                         <div className="col-span-1">
-                            <button type="submit" className="w-full p-2 bg-green-500 font-bold rounded-md">
+                            <button type="submit" className="w-full p-2 bg-green-500 font-bold rounded-md transition-transform duration-300 hover:scale-105">
                                 Send Message
                             </button>
                         </div>

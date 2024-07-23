@@ -17,10 +17,21 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.modal-content {
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 18px;
+  color: #333;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .wpli {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.5rem;
 }
 
 .wpicon {
