@@ -1,10 +1,10 @@
 import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';//allows users to log in with a username and a password\\
+import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
-import bcrypt from 'bcrypt';//check if the passwords match\\ 
+import bcrypt from 'bcrypt';
 
 async function getUser(email: string): Promise<User | undefined> {
     try {
@@ -16,24 +16,20 @@ async function getUser(email: string): Promise<User | undefined> {
     }
 }
 
-
 export const { auth, signIn, signOut } = NextAuth({
     ...authConfig,
     providers: [
         Credentials({
             async authorize(credentials) {
-                //validate the email and password\\
                 const parsedCredentials = z
                     .object({ email: z.string().email(), password: z.string().min(6) })
                     .safeParse(credentials);
 
-                //create a new getUser function that queries the user from the database\\
                 if (parsedCredentials.success) {
                     const { email, password } = parsedCredentials.data;
                     const user = await getUser(email);
                     if (!user) return null;
 
-                    //if the passwords match you want to return the user\\
                     const passwordsMatch = await bcrypt.compare(password, user.password);
                     if (passwordsMatch) return user;
                 }
@@ -43,5 +39,5 @@ export const { auth, signIn, signOut } = NextAuth({
             },
         }),
     ],
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.AUTH_SECRET,
 });
