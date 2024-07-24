@@ -3,14 +3,15 @@
 'use client';
 
 import { FC } from 'react';
-import { HomeIcon, ChevronDownIcon, UserIcon, UserGroupIcon, TruckIcon, UserPlusIcon, ShoppingCartIcon, UserCircleIcon, RectangleGroupIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, ChevronDownIcon, UserIcon, UserGroupIcon, TruckIcon, UserPlusIcon, ShoppingCartIcon, UserCircleIcon, RectangleGroupIcon, ChevronUpIcon, BookOpenIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import clsx from 'clsx';
 
 const links = [
-  { name: 'Dashboard', href: '/navigation', icon: HomeIcon }
+  { name: 'Dashboard', href: '/navigation', icon: HomeIcon },
+  { name: 'Invoices', href: '/navigation/invoices', icon: BookOpenIcon }
 ];
 
 // Nested array for systems and their links
@@ -130,7 +131,7 @@ const RecursiveLinks: FC<RecursiveLinksProps> = ({ links, collapsed, pathname, t
               key={link.name}
               href={link.href}
               className={clsx(
-                'w-full block p-3 bg-[#022140] text-white text-sm hover:bg-[#1E4258] pl-10 border-b border-gray-600',
+                'w-full block p-3 bg-[#1E4258] text-white text-sm hover:bg-[#022140] pl-10 border-b border-gray-600',
                 {
                   'text-white': pathname === link.href,
                 },
@@ -146,14 +147,13 @@ const RecursiveLinks: FC<RecursiveLinksProps> = ({ links, collapsed, pathname, t
             <div key={link.name}>
               <button
                 onClick={() => toggleDropdown(link.name)}
-                className="w-full flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#2D5F5D] hover:bg-[#1E4258] border-b border-gray-600"
+                className="w-full flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#2D5F5D] hover:bg-[#022140] border-b border-gray-600 rounded-lg"
                 style={isNestedLinkActive ? { backgroundColor: '#494B68' } : {}}
               >
                 <ChevronDownIcon className={`w-6 ml-4 mr-4 transform ${dropdownOpen[link.name] ? 'rotate-180' : ''}`} />
-
-                {/* {!collapsed && <p className="md:block">{link.name}</p>} */}
-                {<p className="md:block">{link.name}</p>}
+                <p className="md:block">{link.name}</p>
               </button>
+
               {dropdownOpen[link.name] && (
                 <div className="ml-6">
                   <RecursiveLinks
@@ -190,7 +190,7 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#022140] hover:bg-[#1E4258] border-b border-gray-600',
+              'flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#1E4258] hover:bg-[#022140] border-b border-gray-600',
               {
                 'text-white hover:text-white': pathname === link.href,
               },
@@ -216,7 +216,7 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
           <div key={system.system}>
             <button
               onClick={() => toggleDropdown(system.system)}
-              className="w-full flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#022140] hover:bg-[#1E4258] border-b border-gray-600"
+              className="w-full flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#1E4258] hover:bg-[#022140] border-b border-gray-600"
               style={isSystemLinkActive ? { backgroundColor: '#494B68' } : {}}
             >
 
@@ -240,20 +240,20 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
         );
       })}
 
-      {!collapsed && (
+      {/* {!collapsed && (
         <div className="p-2 text-lg text-white text-center font-bold bg-[#265077] border-b border-gray-600">
           Resources
         </div>
       )}
 
       {resources.map((link) => {
-        const LinkIcon = link.icon;
+        const LinkIcon = link.icon; 
         return (
           <Link
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#022140] hover:bg-[#1E4258] border-b border-gray-600',
+              'flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#1E4258] hover:bg-[#022140] border-b border-gray-600',
               {
                 'text-white hover:text-white': pathname === link.href,
               },
@@ -264,7 +264,7 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
             {!collapsed && <p className="md:block">{link.name}</p>}
           </Link>
         );
-      })}
+      })} */}
 
       {!collapsed && (
         <div className="p-2 text-lg text-white text-center font-bold bg-[#265077] border-b border-gray-600">
@@ -279,7 +279,7 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#022140] hover:bg-[#1E4258] border-b border-gray-600',
+              'flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#1E4258] hover:bg-[#022140] border-b border-gray-600',
               {
                 'text-white hover:text-white': pathname === link.href,
               },

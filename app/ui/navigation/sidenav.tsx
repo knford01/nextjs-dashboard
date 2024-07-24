@@ -13,7 +13,7 @@ export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolea
   };
 
   return (
-    <div className={`fixed top-0 left-0  h-full flex flex-col bg-[#022140] ${collapsed ? 'w-16' : 'w-60'} transition-all duration-300`}>
+    <div className={`fixed top-0 left-0  h-full flex flex-col bg-[#1E4258] ${collapsed ? 'w-16' : 'w-60'} transition-all duration-300`}>
       <div className="flex justify-end pb-4 pt-4">
         <button onClick={toggleCollapse} className="text-white focus:outline-none">
           <ChevronLeftIcon className={`w-6 transform ${collapsed ? 'rotate-180' : ''}`} />
@@ -22,7 +22,7 @@ export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolea
       <div className="flex grow flex-col">
         <NavLinks collapsed={collapsed} />
 
-        <div className="hidden h-auto w-full grow bg-[#022140] md:block"></div>
+        <div className="hidden h-auto w-full grow bg-[#1E4258] md:block"></div>
 
         <form action={handleSignOut}>
 
@@ -34,4 +34,4 @@ export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolea
       </div>
     </div>
   );
-} 
+}  
