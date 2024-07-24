@@ -1,0 +1,71 @@
+/* components/TopNavigation.module.css */
+
+/* app/ui/navigation/TopNavigation.module.css */
+
+.topNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #26394e;
+    /* Adjust color as needed */
+    color: white;
+    height: 60px;
+    /* Adjust height as needed */
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* Expand to the right edge */
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for separation */
+    transition: margin-left 0.3s;
+}
+
+.left h1 {
+    margin: 0;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+    position: relative;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+.userMenu,
+.themeMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    color: black;
+    border: 1px solid #ddd;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.userMenu a,
+.themeMenu button {
+    margin: 5px 0;
+    text-decoration: none;
+    color: black;
+    border: none;
+    background: none;
+    cursor: pointer;
+}

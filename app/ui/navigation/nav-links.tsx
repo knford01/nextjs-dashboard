@@ -1,27 +1,17 @@
+// app/ui/navigation/nav-links.tsx
+
 'use client';
 
-import {
-  UserGroupIcon,
-  HomeIcon,
-  DocumentDuplicateIcon,
-} from '@heroicons/react/24/outline';
+import { HomeIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
-// Map of links to display in the side navigation.
-// Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Home', href: '/navigation', icon: HomeIcon },
-  {
-    name: 'Invoices',
-    href: '/navigation/invoices',
-    icon: DocumentDuplicateIcon,
-  },
-  { name: 'Customers', href: '/navigation/customers', icon: UserGroupIcon },
+  { name: 'Dashboard', href: '/navigation', icon: HomeIcon }
 ];
 
-export default function NavLinks() {
+export default function NavLinks({ collapsed }: { collapsed: boolean }) {
   const pathname = usePathname();
   return (
     <>
@@ -32,17 +22,17 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
+              'flex h-[48px] items-center gap-2 bg-gray-50 text-sm font-medium hover:bg-sky-100 hover:text-blue-600',
               {
-                'bg-sky-100 text-blue-600': pathname === link.href,
+                'bg-[#494B68] text-white': pathname === link.href,
               },
             )}
           >
-            <LinkIcon className="w-6" />
-            <p className="hidden md:block">{link.name}</p>
+            <LinkIcon className="w-6 ml-4 mr-4" />
+            {!collapsed && <p className="md:block">{link.name}</p>}
           </Link>
         );
       })}
     </>
   );
-} 
+}

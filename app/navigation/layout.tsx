@@ -1,22 +1,19 @@
-import SideNav from '@/app/ui/navigation/sidenav';
-import { Metadata } from 'next';
+// app/navigation/layout.tsx
 
-export const metadata: Metadata = {
-    title: {
-        template: '%s | AR-Source Dashboard',
-        default: 'AR-Source Software',
-    },
-    description: 'The official AR-Source Software Website.',
-    metadataBase: new URL('https://www.arsourcesoftware.com/'),
-};
+"use client"
+
+import SideNav from '@/app/ui/navigation/sidenav';
+import { useState } from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+    const [collapsed, setCollapsed] = useState(false);
+
     return (
-        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-            <div className="w-full flex-none md:w-64">
-                <SideNav />
+        <div className="flex h-screen overflow-hidden">
+            <SideNav collapsed={collapsed} setCollapsed={setCollapsed} />
+            <div className={`flex-grow overflow-y-auto p-6 md:p-12 transition-all duration-300 ${collapsed ? 'ml-20' : 'ml-64'}`}>
+                {children}
             </div>
-            <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
         </div>
     );
-}   
+}

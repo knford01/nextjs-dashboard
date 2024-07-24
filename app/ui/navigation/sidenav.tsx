@@ -1,28 +1,37 @@
-import Link from 'next/link';
-import NavLinks from '@/app/ui/navigation/nav-links';
-import { PowerIcon } from '@heroicons/react/24/outline';
-import { signOut } from '@/auth';
+// app/ui/navigation/sidenav.tsx
 
-export default function SideNav() {
+'use client';
+
+import { ChevronLeftIcon, PowerIcon } from '@heroicons/react/24/outline';
+import NavLinks from '@/app/ui/navigation/nav-links';
+import { handleSignOut } from '@/app/auth/actions';
+
+export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolean, setCollapsed: (collapsed: boolean) => void }) {
+
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2">
-      <Link className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40" href="/">
-        <div className="w-32 text-white md:w-40">
-        </div>
-      </Link>
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <NavLinks />
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-        <form action={async () => {
-          'use server';
-          await signOut();
-        }}>
-          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-            <PowerIcon className="w-6" />
-            <div className="hidden md:block">Sign Out</div>
+    <div className={`fixed h-full flex flex-col bg-[#1E4258] ${collapsed ? 'w-15' : 'w-60'} transition-all duration-300`}>
+      <div className="flex justify-end pb-4 pt-4">
+        <button onClick={toggleCollapse} className="text-white focus:outline-none">
+          <ChevronLeftIcon className={`w-6 transform ${collapsed ? 'rotate-180' : ''}`} />
+        </button>
+      </div>
+      <div className="flex grow flex-col space-y-2">
+        <NavLinks collapsed={collapsed} />
+
+        <div className="hidden h-auto w-full grow bg-gray-50 md:block"></div>
+
+        <form action={handleSignOut}>
+
+          <button className="flex h-[48px] w-full items-center gap-2 bg-orange-600 text-sm font-medium text-white hover:bg-sky-100 hover:text-[#1E4258]">
+            <PowerIcon className="w-6 ml-4 mr-4" />
+            {!collapsed && <div className="md:block">Sign Out</div>}
           </button>
         </form>
       </div>
     </div>
   );
-} 
+}
