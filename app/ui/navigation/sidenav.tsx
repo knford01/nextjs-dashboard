@@ -13,20 +13,20 @@ export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolea
   };
 
   return (
-    <div className={`fixed h-full flex flex-col bg-[#1E4258] ${collapsed ? 'w-15' : 'w-60'} transition-all duration-300`}>
+    <div className={`fixed h-full flex flex-col bg-[#022140] ${collapsed ? 'w-15' : 'w-60'} transition-all duration-300`}>
       <div className="flex justify-end pb-4 pt-4">
         <button onClick={toggleCollapse} className="text-white focus:outline-none">
           <ChevronLeftIcon className={`w-6 transform ${collapsed ? 'rotate-180' : ''}`} />
         </button>
       </div>
-      <div className="flex grow flex-col space-y-2">
+      <div className="flex grow flex-col">
         <NavLinks collapsed={collapsed} />
 
         <div className="hidden h-auto w-full grow bg-gray-50 md:block"></div>
 
         <form action={handleSignOut}>
 
-          <button className="flex h-[48px] w-full items-center gap-2 bg-orange-600 text-sm font-medium text-white hover:bg-sky-100 hover:text-[#1E4258]">
+          <button className="flex h-[48px] w-full items-center gap-2 bg-orange-600 text-sm font-medium text-white hover:bg-orange-400">
             <PowerIcon className="w-6 ml-4 mr-4" />
             {!collapsed && <div className="md:block">Sign Out</div>}
           </button>
