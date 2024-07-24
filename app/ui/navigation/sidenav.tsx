@@ -22,7 +22,7 @@ export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolea
       <div className="flex grow flex-col">
         <NavLinks collapsed={collapsed} />
 
-        <div className="hidden h-auto w-full grow bg-gray-50 md:block"></div>
+        <div className="hidden h-auto w-full grow bg-[#022140] md:block"></div>
 
         <form action={handleSignOut}>
 

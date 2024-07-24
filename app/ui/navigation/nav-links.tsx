@@ -3,7 +3,7 @@
 'use client';
 
 import { FC } from 'react';
-import { HomeIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, ChevronDownIcon, UserIcon, UserGroupIcon, TruckIcon, UserPlusIcon, ShoppingCartIcon, UserCircleIcon, RectangleGroupIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -29,6 +29,7 @@ const systemsLinks = [
       { name: 'Reports', href: '/navigation/crm/reports' },
       { name: 'Settings', href: '/navigation/crm/settings' },
     ],
+    icon: UserPlusIcon
   },
   {
     system: 'EDI Manager',
@@ -41,6 +42,7 @@ const systemsLinks = [
       { name: 'Reports', href: '/navigation/edi/reports' },
       { name: 'Settings', href: '/navigation/edi/settings' },
     ],
+    icon: ShoppingCartIcon
   },
   {
     system: 'Human Relations',
@@ -52,6 +54,7 @@ const systemsLinks = [
       { name: 'Reports', href: '/navigation/hr/reports' },
       { name: 'Settings', href: '/navigation/hr/settings' },
     ],
+    icon: UserCircleIcon
   },
   {
     system: 'Project Manager',
@@ -62,6 +65,7 @@ const systemsLinks = [
       { name: 'Reports', href: '/navigation/pm/reports' },
       { name: 'Settings', href: '/navigation/pm/settings' },
     ],
+    icon: RectangleGroupIcon
   },
   {
     system: 'Warehouse Manager',
@@ -73,7 +77,6 @@ const systemsLinks = [
           { name: 'History', href: '/navigation/wm/receiving/history' },
         ]
       },
-      { name: 'Inventory', href: '/navigation/wm/inventory' },
       {
         name: 'Fullfilment', links: [
           { name: 'Orders', href: '/navigation/wm/fullfilment/orders' },
@@ -82,10 +85,20 @@ const systemsLinks = [
           { name: 'History', href: '/navigation/wm/fullfilment/history' },
         ]
       },
+      { name: 'Inventory', href: '/navigation/wm/inventory' },
       { name: 'Reports', href: '/navigation/wm/reports' },
       { name: 'Settings', href: '/navigation/wm/settings' },
     ],
+    icon: TruckIcon
   },
+];
+
+const resources = [
+  { name: 'Customers', href: '/navigation/resources/customers', icon: UserGroupIcon }
+];
+
+const settings = [
+  { name: 'Users', href: '/navigation/settings/users', icon: UserIcon }
 ];
 
 interface Link {
@@ -133,11 +146,13 @@ const RecursiveLinks: FC<RecursiveLinksProps> = ({ links, collapsed, pathname, t
             <div key={link.name}>
               <button
                 onClick={() => toggleDropdown(link.name)}
-                className="w-full flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#022140] hover:bg-[#1E4258] border-b border-gray-600"
+                className="w-full flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#2D5F5D] hover:bg-[#1E4258] border-b border-gray-600"
                 style={isNestedLinkActive ? { backgroundColor: '#494B68' } : {}}
               >
                 <ChevronDownIcon className={`w-6 ml-4 mr-4 transform ${dropdownOpen[link.name] ? 'rotate-180' : ''}`} />
-                {!collapsed && <p className="md:block">{link.name}</p>}
+
+                {/* {!collapsed && <p className="md:block">{link.name}</p>} */}
+                {<p className="md:block">{link.name}</p>}
               </button>
               {dropdownOpen[link.name] && (
                 <div className="ml-6">
@@ -195,6 +210,7 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
       )}
 
       {systemsLinks.map((system) => {
+        const LinkIcon = system.icon;
         const isSystemLinkActive = system.links.some(link => pathname === link.href || (link.links && link.links.some(nestedLink => pathname === nestedLink.href)));
         return (
           <div key={system.system}>
@@ -203,8 +219,11 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
               className="w-full flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#022140] hover:bg-[#1E4258] border-b border-gray-600"
               style={isSystemLinkActive ? { backgroundColor: '#494B68' } : {}}
             >
-              <ChevronDownIcon className={`w-6 ml-4 mr-4 transform ${dropdownOpen[system.system] ? 'rotate-180' : ''}`} />
+
+              <ChevronUpIcon className={`w-6 ml-4 mr-4 ${dropdownOpen[system.system] ? '' : 'hidden'}`} />
+              <LinkIcon className={`w-6 ml-4 mr-4 ${dropdownOpen[system.system] ? 'hidden' : ''}`} />
               {!collapsed && <p className="md:block">{system.system}</p>}
+
             </button>
             {dropdownOpen[system.system] && (
               <div className="ml-6">
@@ -220,6 +239,60 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
           </div>
         );
       })}
+
+      {!collapsed && (
+        <div className="p-2 text-lg text-white text-center font-bold bg-[#265077] border-b border-gray-600">
+          Resources
+        </div>
+      )}
+
+      {resources.map((link) => {
+        const LinkIcon = link.icon;
+        return (
+          <Link
+            key={link.name}
+            href={link.href}
+            className={clsx(
+              'flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#022140] hover:bg-[#1E4258] border-b border-gray-600',
+              {
+                'text-white hover:text-white': pathname === link.href,
+              },
+            )}
+            style={pathname === link.href ? { backgroundColor: '#494B68' } : {}}
+          >
+            <LinkIcon className="w-6 ml-4 mr-4" />
+            {!collapsed && <p className="md:block">{link.name}</p>}
+          </Link>
+        );
+      })}
+
+      {!collapsed && (
+        <div className="p-2 text-lg text-white text-center font-bold bg-[#265077] border-b border-gray-600">
+          Admin Settings
+        </div>
+      )}
+
+      {settings.map((link) => {
+        const LinkIcon = link.icon;
+        return (
+          <Link
+            key={link.name}
+            href={link.href}
+            className={clsx(
+              'flex h-[48px] items-center gap-2 text-white text-md font-medium bg-[#022140] hover:bg-[#1E4258] border-b border-gray-600',
+              {
+                'text-white hover:text-white': pathname === link.href,
+              },
+            )}
+            style={pathname === link.href ? { backgroundColor: '#494B68' } : {}}
+          >
+            <LinkIcon className="w-6 ml-4 mr-4" />
+            {!collapsed && <p className="md:block">{link.name}</p>}
+          </Link>
+        );
+      })}
+
+
     </>
   );
 }
