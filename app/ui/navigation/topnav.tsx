@@ -1,50 +1,22 @@
-// components/TopNavigation.tsx
+// app/ui/navigation/top-nav.tsx
 
-"use client";
+'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import styles from '../css/topnavigation.module.css';
-import { AdjustmentsVerticalIcon, UserIcon } from '@heroicons/react/24/outline'; // Ensure v2 path
+import { FC } from 'react';
+import clsx from 'clsx';
 
-const TopNavigation = () => {
-    const [showUserMenu, setShowUserMenu] = useState(false);
-    const [showThemeMenu, setShowThemeMenu] = useState(false);
+interface TopNavProps {
+    collapsed: boolean;
+}
 
-    const handleUserMenuToggle = () => setShowUserMenu(!showUserMenu);
-    const handleThemeMenuToggle = () => setShowThemeMenu(!showThemeMenu);
-
+const TopNav: FC<TopNavProps> = ({ collapsed }) => {
     return (
-        <nav className={styles.topNav}>
-            <div className={styles.left}>
-                <h1>AR-Source Software</h1>
+        <div className={clsx("fixed top-0 left-0 right-0 flex items-center h-14 bg-[#022140] text-white transition-all duration-300 z-10", { 'ml-16': collapsed, 'ml-60': !collapsed })}>
+            <div className="flex items-center pl-4">
+                <h1 className="text-lg font-bold">AR-Source Software</h1>
             </div>
-            <div className={styles.right}>
-                <button onClick={handleUserMenuToggle} className={styles.iconButton}>
-                    <UserIcon className={styles.icon} />
-                </button>
-                {showUserMenu && (
-                    <div className={styles.userMenu}>
-                        {/* User menu items */}
-                        <Link href="/profile">Profile</Link>
-                        <Link href="/settings">Settings</Link>
-                        <Link href="/logout">Logout</Link>
-                    </div>
-                )}
-                <button onClick={handleThemeMenuToggle} className={styles.iconButton}>
-                    <AdjustmentsVerticalIcon className={styles.icon} />
-                </button>
-                {showThemeMenu && (
-                    <div className={styles.themeMenu}>
-                        {/* Theme options */}
-                        <button>Dark Theme</button>
-                        <button>Light Theme</button>
-                        {/* Add more themes */}
-                    </div>
-                )}
-            </div>
-        </nav>
+        </div>
     );
 };
 
-export default TopNavigation;
+export default TopNav;
