@@ -239,7 +239,7 @@ export default function Page() {
               <h2 className="text-4xl font-bold text-white">Suite of Customizable Software</h2>
               <hr className="my-4 border-t border-[#eb3c00]" />
               <p className="text-2xl text-white font-semibold">
-                We can fully customize our suite of integrated software to what ever buisness needs you may have
+                We can tailor our integrated software suite to meet any specific business needs you have
               </p>
             </div>
 

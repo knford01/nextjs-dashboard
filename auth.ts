@@ -4,7 +4,7 @@ import { authConfig } from './auth.config';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
-import bcrypt from 'bcrypt';//check if the passwords match\\
+import bcrypt from 'bcrypt';//check if the passwords match\\ 
 
 async function getUser(email: string): Promise<User | undefined> {
     try {
@@ -15,6 +15,7 @@ async function getUser(email: string): Promise<User | undefined> {
         throw new Error('Failed to fetch user.');
     }
 }
+
 
 export const { auth, signIn, signOut } = NextAuth({
     ...authConfig,
@@ -42,4 +43,5 @@ export const { auth, signIn, signOut } = NextAuth({
             },
         }),
     ],
+    secret: process.env.AUTH_SECRET,
 });

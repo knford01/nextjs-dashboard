@@ -34,4 +34,4 @@ export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolea
       </div>
     </div>
   );
-}
+} 
