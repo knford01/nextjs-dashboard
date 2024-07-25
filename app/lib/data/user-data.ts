@@ -7,6 +7,7 @@ import {
 import { unstable_noStore as noStore } from 'next/cache';
 
 export async function fetchUsers() {
+    noStore();
     try {
         const data = await sql<User>`
         SELECT
@@ -17,11 +18,11 @@ export async function fetchUsers() {
         FROM users
         ORDER BY name ASC`;
 
-        const customers = data.rows;
-        return customers;
+        const users = data.rows;
+        return users;
     } catch (err) {
         console.error('Database Error:', err);
-        throw new Error('Failed to fetch all customers.');
+        throw new Error('Failed to fetch all users.');
     }
 }
 

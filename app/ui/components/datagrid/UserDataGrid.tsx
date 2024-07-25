@@ -6,7 +6,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
-import DataGridExporter from '@/app/ui/components/DataGridExporter';
+import DataGridExporter from './DataGridExporter';
 import { User } from '@/app/lib/definitions';
 
 interface UserDataGridProps {
@@ -59,7 +59,9 @@ const columns: GridColDef[] = [
 const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {
     return (
         <Box sx={{ height: '100%', width: '100%' }}>
-            <DataGridExporter data={users} fileName="users_export.xlsx" />
+            <Box sx={{ mb: 1 }}>
+                <DataGridExporter data={users} fileName="users_export.xlsx" />
+            </Box>
             <DataGrid
                 filterModel={{
                     items: filterId ? [
@@ -86,4 +88,4 @@ const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {
     );
 };
 
-export default UserDataGrid;
+export default UserDataGrid; 

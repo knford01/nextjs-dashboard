@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
 // Dynamically import the UserDataGrid component
-const UserDataGrid = dynamic(() => import('./UserDataGrid'), { ssr: false });
+const UserDataGrid = dynamic(() => import('@/app/ui/components/datagrid/UserDataGrid'), { ssr: false });
 
 export const metadata: Metadata = {
     title: 'Users',
@@ -23,10 +23,10 @@ export default async function Page({
     };
 }) {
     const users = await fetchUsers();
-    console.log(users);
+    // console.log(users);
 
     return (
-        <Container maxWidth="xl" sx={{ m: 2, width: '100%', height: '85%', backgroundColor: '#f5f5f5' }}>
+        <Container maxWidth="xl" sx={{ m: 2, mt: 5, width: '100%', height: '85%' }}>
             <UserDataGrid users={users} filterId={searchParams?.id} />
         </Container>
     );
