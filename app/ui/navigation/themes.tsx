@@ -1,4 +1,4 @@
-// app/ui/navitation/themes.ts
+// app/themes.ts
 
 import { createTheme } from '@mui/material/styles';
 import type { } from '@mui/x-data-grid/themeAugmentation';
@@ -15,8 +15,20 @@ export const lightTheme = createTheme({
             primary: '#000000',
             secondary: '#333333',
         },
+        action: {
+            hover: '#e0e0e0', // Light theme hover color
+            selected: '#d3d3d3', // Light theme selected color
+        },
     },
     components: {
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#ffffff',
+                    color: '#000000',
+                },
+            },
+        },
         MuiDataGrid: {
             styleOverrides: {
                 root: {
@@ -35,7 +47,6 @@ export const lightTheme = createTheme({
             },
         },
     },
-    // Add other component customizations here
 });
 
 export const darkTheme = createTheme({
@@ -50,8 +61,20 @@ export const darkTheme = createTheme({
             primary: '#ffffff',
             secondary: '#bbbbbb',
         },
+        action: {
+            hover: '#555555', // Dark theme hover color
+            selected: '#777777', // Dark theme selected color
+        },
     },
     components: {
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#333333',
+                    color: '#ffffff',
+                },
+            },
+        },
         MuiDataGrid: {
             styleOverrides: {
                 root: {
@@ -70,7 +93,6 @@ export const darkTheme = createTheme({
             },
         },
     },
-    // Add other component customizations here
 });
 
 export const defaultTheme = createTheme({
@@ -85,8 +107,20 @@ export const defaultTheme = createTheme({
             primary: '#ffffff',
             secondary: '#000000',
         },
+        action: {
+            hover: '#145a86', // Default theme hover color
+            selected: '#1976d2', // Default theme selected color
+        },
     },
     components: {
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#1E4258',
+                    color: '#ffffff',
+                },
+            },
+        },
         MuiDataGrid: {
             styleOverrides: {
                 root: {
@@ -105,5 +139,4 @@ export const defaultTheme = createTheme({
             },
         },
     },
-    // Add other component customizations here
 });

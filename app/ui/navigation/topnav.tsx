@@ -6,7 +6,7 @@ import React from 'react';
 import { FC } from 'react';
 import clsx from 'clsx';
 import { COMPANY_NAME } from '@/app/lib/constants';
-import { Box, IconButton, Menu, MenuItem } from '@mui/material';
+import { Box, IconButton, Menu, MenuItem, useTheme } from '@mui/material';
 import PaletteIcon from '@mui/icons-material/Palette';
 import { useThemeContext } from '@/app/navigation/layout';
 import { lightTheme, darkTheme, defaultTheme } from './themes';
@@ -18,6 +18,7 @@ interface TopNavProps {
 const TopNav: FC<TopNavProps> = ({ collapsed }) => {
     const { setTheme } = useThemeContext();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const theme = useTheme();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -28,11 +29,25 @@ const TopNav: FC<TopNavProps> = ({ collapsed }) => {
     };
 
     return (
-        <div className={clsx("fixed top-0 left-0 right-0 flex items-center h-14 bg-[#1E4258] text-white transition-all duration-300 z-10", { 'ml-16': collapsed, 'ml-60': !collapsed })}>
-            <div className="flex items-center pl-4">
+        <Box
+            sx={{
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.text.primary,
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                display: 'flex',
+                alignItems: 'center',
+                height: '56px',
+                transition: 'all 0.3s',
+                zIndex: 10,
+                marginLeft: collapsed ? '64px' : '240px',
+            }}
+        >
+            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', pl: 2 }}>
                 <h1 className="text-lg font-bold">{COMPANY_NAME}</h1>
-            </div>
-            <Box sx={{ flexGrow: 1 }} />
+            </Box>
             <IconButton onClick={handleClick} color="inherit" sx={{ mr: 2 }}>
                 <PaletteIcon />
             </IconButton>
@@ -45,7 +60,7 @@ const TopNav: FC<TopNavProps> = ({ collapsed }) => {
                 <MenuItem onClick={() => { setTheme(darkTheme); handleClose(); }}>Dark Theme</MenuItem>
                 <MenuItem onClick={() => { setTheme(defaultTheme); handleClose(); }}>Default Theme</MenuItem>
             </Menu>
-        </div>
+        </Box>
     );
 };
 
