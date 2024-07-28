@@ -26,7 +26,7 @@ export default async function Page({
     // console.log(users);
 
     return (
-        <Container maxWidth="xl" sx={{ m: 2, mt: 5, width: '100%', height: '85%' }}>
+        <Container maxWidth="xl" sx={{ m: 0, mt: 5, width: '100%', height: '85%' }}>
             <UserDataGrid users={users} filterId={searchParams?.id} />
         </Container>
     );

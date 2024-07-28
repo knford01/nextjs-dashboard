@@ -26,8 +26,8 @@ const columns: GridColDef[] = [
         ),
     },
     {
-        field: 'name',
-        headerName: 'Name',
+        field: 'first_name',
+        headerName: 'First Name',
         width: 200,
         renderCell: (params) => (
             <Tooltip title={params.value || ''}>
@@ -55,8 +55,8 @@ const columns: GridColDef[] = [
     },
 ];
 
-// const UserDataGrid = ({ users, filterId }) => {
 const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {
+
     return (
         <Box sx={{ height: '100%', width: '100%' }}>
             <Box sx={{ mb: 1 }}>
@@ -88,4 +88,4 @@ const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {
     );
 };
 
-export default UserDataGrid; 
+export default UserDataGrid;

@@ -6,6 +6,7 @@ import React from 'react';
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
 import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
 
 interface DataGridExporterProps {
     data: any[];
@@ -13,6 +14,8 @@ interface DataGridExporterProps {
 }
 
 const DataGridExporter: React.FC<DataGridExporterProps> = ({ data, fileName = 'export.xlsx' }) => {
+    const theme = useTheme();
+
     const exportToExcel = () => {
         const ws = XLSX.utils.json_to_sheet(data);
         const wb = XLSX.utils.book_new();
@@ -29,10 +32,20 @@ const DataGridExporter: React.FC<DataGridExporterProps> = ({ data, fileName = 'e
     };
 
     return (
-        <Button onClick={exportToExcel} variant="contained">
+        <Button
+            onClick={exportToExcel}
+            variant="contained"
+            sx={{
+                backgroundColor: `${theme.palette.secondary.main} !important`,
+                color: theme.palette.text.primary,
+                '&:hover': {
+                    backgroundColor: `${theme.palette.action.hover} !important`,
+                },
+            }}
+        >
             Export to Excel
         </Button>
     );
 };
 
-export default DataGridExporter; 
+export default DataGridExporter;  

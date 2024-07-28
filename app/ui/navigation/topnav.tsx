@@ -48,13 +48,29 @@ const TopNav: FC<TopNavProps> = ({ collapsed }) => {
             <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', pl: 2 }}>
                 <h1 className="text-lg font-bold">{COMPANY_NAME}</h1>
             </Box>
-            <IconButton onClick={handleClick} color="inherit" sx={{ mr: 2 }}>
+            <IconButton
+                onClick={handleClick}
+                color="inherit"
+                sx={{
+                    mr: 2,
+                    '&:hover': {
+                        backgroundColor: theme.palette.action.hover,
+                        color: theme.palette.text.secondary,
+                    },
+                }}
+            >
                 <PaletteIcon />
             </IconButton>
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                PaperProps={{
+                    sx: {
+                        backgroundColor: theme.palette.secondary.main,
+                        color: theme.palette.text.primary,
+                    },
+                }}
             >
                 <MenuItem onClick={() => { setTheme(lightTheme); handleClose(); }}>Light Theme</MenuItem>
                 <MenuItem onClick={() => { setTheme(darkTheme); handleClose(); }}>Dark Theme</MenuItem>
@@ -64,4 +80,4 @@ const TopNav: FC<TopNavProps> = ({ collapsed }) => {
     );
 };
 
-export default TopNav;
+export default TopNav; 

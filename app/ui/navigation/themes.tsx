@@ -5,44 +5,87 @@ import type { } from '@mui/x-data-grid/themeAugmentation';
 
 export const lightTheme = createTheme({
     palette: {
+        action: {
+            hover: '#e0f7fa', // Light teal for hover
+            selected: '#b2ebf2', // Slightly darker teal for selected
+        },
+        background: {
+            default: '#ffffff', // White for default background
+            paper: '#f5f5f5', // Light gray for paper background
+        },
         primary: {
-            main: '#ffffff',
+            main: '#64b5f6', // Light blue for primary color
         },
         secondary: {
-            main: '#f5f5f5',
+            main: '#81c784', // Light green for secondary color
         },
         text: {
-            primary: '#000000',
-            secondary: '#333333',
-        },
-        action: {
-            hover: '#e0e0e0', // Light theme hover color
-            selected: '#d3d3d3', // Light theme selected color
+            primary: '#ffffff', // Black for primary text
+            secondary: '#333333', // Dark gray for secondary text
         },
     },
     components: {
-        MuiAppBar: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: '#ffffff',
-                    color: '#000000',
-                },
-            },
-        },
         MuiDataGrid: {
             styleOverrides: {
                 root: {
-                    backgroundColor: '#ffffff',
-                    color: '#000000',
+                    backgroundColor: '#ffffff', // White background for DataGrid
+                    color: '#000000', // Black text color for DataGrid
                 },
                 columnHeaders: {
-                    backgroundColor: '#f5f5f5',
-                },
-                cell: {
-                    borderBottom: '1px solid #ddd',
+                    backgroundColor: '#f5f5f5', // Light gray for column headers
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                        color: '#000000', // Black text color for column headers
+                    },
                 },
                 footerContainer: {
-                    backgroundColor: '#f5f5f5',
+                    backgroundColor: '#f5f5f5', // Light gray for footer container
+                },
+                checkboxInput: {
+                    color: '#000000', // Black for checkbox
+                    '&.Mui-checked': {
+                        color: '#64b5f6', // Light blue for checked checkbox
+                    },
+                },
+                menu: {
+                    '& .MuiPaper-root': {
+                        backgroundColor: '#ffffff', // White for menu background
+                        color: '#000000', // Black text color for menu
+                    },
+                },
+            },
+        },
+        MuiSvgIcon: {
+            styleOverrides: {
+                root: {
+                    color: '#ffffff', // Black for SVG icons
+                },
+            },
+        },
+        MuiPaginationItem: {
+            styleOverrides: {
+                root: {
+                    color: '#000000', // Black for pagination items
+                    '&.Mui-selected': {
+                        backgroundColor: '#b2ebf2', // Light teal for selected pagination item
+                    },
+                },
+            },
+        },
+        MuiButtonBase: {
+            styleOverrides: {
+                root: {
+                    color: '#000000', // Black for buttons
+                },
+            },
+        },
+        MuiButton: {
+            styleOverrides: {
+                contained: {
+                    backgroundColor: '#81c784', // Light green for contained buttons
+                    color: '#ffffff', // White text color for contained buttons
+                    '&:hover': {
+                        backgroundColor: '#66bb6a', // Darker green for hover state
+                    },
                 },
             },
         },
@@ -51,44 +94,87 @@ export const lightTheme = createTheme({
 
 export const darkTheme = createTheme({
     palette: {
+        action: {
+            hover: '#333333', // Dark gray for hover
+            selected: '#444444', // Slightly lighter gray for selected
+        },
+        background: {
+            default: '#121212', // Very dark gray for default background
+            paper: '#1e1e1e', // Dark gray for paper background
+        },
         primary: {
-            main: '#333333',
+            main: '#320b86', // Very dark purple for primary color
         },
         secondary: {
-            main: '#424242',
+            main: '#00796b', // Dark green for secondary color
         },
         text: {
-            primary: '#ffffff',
-            secondary: '#bbbbbb',
-        },
-        action: {
-            hover: '#555555', // Dark theme hover color
-            selected: '#777777', // Dark theme selected color
+            primary: '#ffffff', // White for primary text
+            secondary: '#aaaaaa', // Light gray for secondary text
         },
     },
     components: {
-        MuiAppBar: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: '#333333',
-                    color: '#ffffff',
-                },
-            },
-        },
         MuiDataGrid: {
             styleOverrides: {
                 root: {
-                    backgroundColor: '#424242',
-                    color: '#ffffff',
+                    backgroundColor: '#1e1e1e', // Dark gray background for DataGrid
+                    color: '#ffffff', // White text color for DataGrid
                 },
                 columnHeaders: {
-                    backgroundColor: '#333333',
-                },
-                cell: {
-                    borderBottom: '1px solid #555',
+                    backgroundColor: '#2c2c2c', // Slightly lighter dark gray for column headers
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                        color: '#ffffff', // White text color for column headers
+                    },
                 },
                 footerContainer: {
-                    backgroundColor: '#333333',
+                    backgroundColor: '#2c2c2c', // Slightly lighter dark gray for footer container
+                },
+                checkboxInput: {
+                    color: '#ffffff', // White for checkbox
+                    '&.Mui-checked': {
+                        color: '#5e35b1', // Dark purple for checked checkbox
+                    },
+                },
+                menu: {
+                    '& .MuiPaper-root': {
+                        backgroundColor: '#2c2c2c', // Dark gray for menu background
+                        color: '#ffffff', // White text color for menu
+                    },
+                },
+            },
+        },
+        MuiSvgIcon: {
+            styleOverrides: {
+                root: {
+                    color: '#ffffff', // White for SVG icons
+                },
+            },
+        },
+        MuiPaginationItem: {
+            styleOverrides: {
+                root: {
+                    color: '#ffffff', // White for pagination items
+                    '&.Mui-selected': {
+                        backgroundColor: '#444444', // Dark gray for selected pagination item
+                    },
+                },
+            },
+        },
+        MuiButtonBase: {
+            styleOverrides: {
+                root: {
+                    color: '#ffffff', // White for buttons
+                },
+            },
+        },
+        MuiButton: {
+            styleOverrides: {
+                contained: {
+                    backgroundColor: '#5e35b1', // Dark purple for contained buttons
+                    color: '#ffffff', // White text color for contained buttons
+                    '&:hover': {
+                        backgroundColor: '#4527a0', // Darker purple for hover state
+                    },
                 },
             },
         },
@@ -97,46 +183,61 @@ export const darkTheme = createTheme({
 
 export const defaultTheme = createTheme({
     palette: {
+        action: {
+            hover: '#022140',
+            selected: '#494B68',
+        },
+        background: {
+            default: '#022140',
+            paper: '#D3D3D3',
+        },
         primary: {
-            main: '#1976d2',
+            main: '#1E4258',
         },
         secondary: {
-            main: '#e3f2fd',
+            main: '#265077',
         },
         text: {
             primary: '#ffffff',
-            secondary: '#000000',
-        },
-        action: {
-            hover: '#145a86', // Default theme hover color
-            selected: '#1976d2', // Default theme selected color
+            secondary: '#ffffff',
         },
     },
     components: {
-        MuiAppBar: {
+        MuiDataGrid: {
             styleOverrides: {
                 root: {
                     backgroundColor: '#1E4258',
                     color: '#ffffff',
                 },
-            },
-        },
-        MuiDataGrid: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: '#ffffff',
-                    color: '#000000',
-                },
                 columnHeaders: {
-                    backgroundColor: '#1976d2',
-                },
-                cell: {
-                    borderBottom: '1px solid #ddd',
+                    backgroundColor: '#022140',
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                        color: '#ffffff',
+                    },
                 },
                 footerContainer: {
-                    backgroundColor: '#e3f2fd',
+                    backgroundColor: '#022140',
+                },
+                checkboxInput: {
+                    color: '#ffffff',
+                    '&.Mui-checked': {
+                        color: '#ffffff',
+                    },
+                },
+                menu: {
+                    '& .MuiPaper-root': {
+                        backgroundColor: '#265077',
+                        color: '#ffffff',
+                    },
                 },
             },
         },
+        MuiSvgIcon: {
+            styleOverrides: {
+                root: {
+                    color: '#ffffff',
+                },
+            },
+        }
     },
 });

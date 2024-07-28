@@ -4,9 +4,10 @@
 
 import SideNav from '@/app/ui/navigation/sidenav';
 import TopNav from '@/app/ui/navigation/topnav';
+import { Box } from '@mui/material';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { ThemeProvider, Theme } from '@mui/material/styles';
-import { lightTheme, darkTheme, defaultTheme } from '../ui/navigation/themes';
+import { defaultTheme } from '../ui/navigation/themes';
 
 interface ThemeContextProps {
     theme: Theme;
@@ -34,17 +35,18 @@ export default function Layout({ children }: { children: ReactNode }) {
                     <SideNav collapsed={collapsed} setCollapsed={setCollapsed} />
                     <div className="flex flex-col flex-grow">
                         <TopNav collapsed={collapsed} />
-                        <div
-                            className={`flex-grow overflow-y-auto p-6 md:p-12 transition-all duration-300 ${collapsed ? 'ml-16' : 'ml-60'
-                                } pt-20`}
-                            style={{ backgroundColor: theme.palette.background.default }}
+                        <Box
+                            sx={{
+                                flexGrow: 1, overflowY: 'auto', backgroundColor: theme.palette.background.paper, // Use theme background color
+                                padding: { xs: 6, }, transition: 'all 0.3s', marginLeft: collapsed ? '4rem' : '15rem', paddingTop: '1rem',
+                            }}
                         >
-                            <div className="m-6"></div>
+                            <Box sx={{ m: 5 }}></Box>
                             {children}
-                        </div>
+                        </Box>
                     </div>
                 </div>
             </ThemeProvider>
         </ThemeContext.Provider>
     );
-}
+} 

@@ -20,14 +20,8 @@ export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolea
       sx={{
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.text.primary,
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        height: '100%',
-        width: collapsed ? '64px' : '240px',
-        transition: 'all 0.3s',
-        display: 'flex',
-        flexDirection: 'column',
+        position: 'fixed', top: 0, left: 0, height: '100%', width: collapsed ? '64px' : '240px',
+        transition: 'all 0.3s', display: 'flex', flexDirection: 'column',
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'end', padding: '16px' }}>
@@ -48,4 +42,4 @@ export default function SideNav({ collapsed, setCollapsed }: { collapsed: boolea
       </Box>
     </Box>
   );
-}
+} 

@@ -12,11 +12,11 @@ export async function fetchUsers() {
         const data = await sql<User>`
         SELECT
           id,
-          name,
+          first_name,
           email, 
           '' as password
         FROM users
-        ORDER BY name ASC`;
+        ORDER BY first_name ASC`;
 
         const users = data.rows;
         return users;
@@ -32,7 +32,7 @@ export async function fetchUserById(id: string) {
         const data = await sql<User>`
         SELECT
           id,
-          name,
+          first_name,
           email, 
           '' as password
         FROM users
