@@ -15,10 +15,34 @@ interface UserDataGridProps {
 }
 
 const columns: GridColDef[] = [
+    // {
+    //     field: 'id',
+    //     headerName: 'ID',
+    //     width: 250,
+    //     renderCell: (params) => (
+    //         <Tooltip title={params.value || ''}>
+    //             <div>{params.value}</div>
+    //         </Tooltip>
+    //     ),
+    // },
     {
-        field: 'id',
-        headerName: 'ID',
-        width: 250,
+        field: 'avatar',
+        headerName: 'Avatar',
+        width: 60,
+        sortable: true,
+        renderCell: (params) => (
+            <img
+                src={params.value}
+                alt="Avatar"
+                style={{ width: '35px', height: '35px', borderRadius: '50%', marginTop: '8px' }}
+            />
+
+        ),
+    },
+    {
+        field: 'first_name',
+        headerName: 'First Name',
+        width: 200,
         renderCell: (params) => (
             <Tooltip title={params.value || ''}>
                 <div>{params.value}</div>
@@ -26,8 +50,8 @@ const columns: GridColDef[] = [
         ),
     },
     {
-        field: 'first_name',
-        headerName: 'First Name',
+        field: 'last_name',
+        headerName: 'Last Name',
         width: 200,
         renderCell: (params) => (
             <Tooltip title={params.value || ''}>
@@ -47,12 +71,23 @@ const columns: GridColDef[] = [
         ),
     },
     {
-        field: 'password',
-        headerName: 'Password',
+        field: 'active',
+        headerName: 'Active',
         type: 'string',
-        sortable: true,
-        width: 200,
+        width: 400,
+        renderCell: (params) => (
+            <Tooltip title={params.value || ''}>
+                <div>{params.value}</div>
+            </Tooltip>
+        ),
     },
+    // {
+    //     field: 'password',
+    //     headerName: 'Password',
+    //     type: 'string',
+    //     sortable: true,
+    //     width: 200,
+    // },
 ];
 
 const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {

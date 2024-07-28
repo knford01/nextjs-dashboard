@@ -13,8 +13,13 @@ export async function fetchUsers() {
         SELECT
           id,
           first_name,
+          last_name,
+          avatar,
           email, 
-          '' as password
+          case
+            when active = 1 then 'Yes'
+            else 'No'
+          end as active
         FROM users
         ORDER BY first_name ASC`;
 
