@@ -36,6 +36,8 @@ const DataGridExporter: React.FC<DataGridExporterProps> = ({ data, fileName = 'e
             onClick={exportToExcel}
             variant="contained"
             sx={{
+                l: 0,
+                mr: 1,
                 backgroundColor: `${theme.palette.secondary.main} !important`,
                 color: theme.palette.text.primary,
                 '&:hover': {

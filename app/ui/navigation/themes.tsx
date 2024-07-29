@@ -23,6 +23,26 @@ export const lightTheme = createTheme({
             primary: '#ffffff', // Black for primary text
             secondary: '#333333', // Dark gray for secondary text
         },
+        error: {
+            main: '#d32f2f',
+            light: '#ef5350',
+            dark: '#c62828'
+        },
+        info: {
+            main: '#0288d1',
+            light: '#03a9f4',
+            dark: '#01579b'
+        },
+        success: {
+            main: '#2e7d32',
+            light: '#4caf50',
+            dark: '#1b5e20'
+        },
+        warning: {
+            main: '#ed6c02',
+            light: '#ff9800',
+            dark: '#e65100'
+        }
     },
     components: {
         MuiDataGrid: {
@@ -112,6 +132,26 @@ export const darkTheme = createTheme({
             primary: '#ffffff', // White for primary text
             secondary: '#aaaaaa', // Light gray for secondary text
         },
+        error: {
+            main: '#d32f2f',
+            light: '#ef5350',
+            dark: '#c62828'
+        },
+        info: {
+            main: '#0288d1',
+            light: '#03a9f4',
+            dark: '#01579b'
+        },
+        success: {
+            main: '#2e7d32',
+            light: '#4caf50',
+            dark: '#1b5e20'
+        },
+        warning: {
+            main: '#ed6c02',
+            light: '#ff9800',
+            dark: '#e65100'
+        }
     },
     components: {
         MuiDataGrid: {
@@ -201,6 +241,26 @@ export const defaultTheme = createTheme({
             primary: '#ffffff',
             secondary: '#ffffff',
         },
+        error: {
+            main: '#d32f2f',
+            light: '#ef5350',
+            dark: '#c62828'
+        },
+        info: {
+            main: '#0288d1',
+            light: '#03a9f4',
+            dark: '#01579b'
+        },
+        success: {
+            main: '#2e7d32',
+            light: '#4caf50',
+            dark: '#1b5e20'
+        },
+        warning: {
+            main: '#ed6c02',
+            light: '#ff9800',
+            dark: '#e65100'
+        }
     },
     components: {
         MuiDataGrid: {
