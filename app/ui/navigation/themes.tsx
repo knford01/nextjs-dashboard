@@ -229,7 +229,7 @@ export const defaultTheme = createTheme({
         },
         background: {
             default: '#022140',
-            paper: '#D3D3D3',
+            paper: '#e8e8e8',
         },
         primary: {
             main: '#1E4258',

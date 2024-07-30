@@ -3,9 +3,8 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { UserModal, DeactivateModal } from '../components/modals/UserModals';
-import { red } from '@mui/material/colors';
+import { PencilIcon, PlusIcon, TrashIcon, StarIcon } from '@heroicons/react/24/outline';
+import { UserModal, UserStatusModal } from '../components/modals/UserModals';
 
 export function AddUser() {
   const theme = useTheme();
@@ -38,7 +37,12 @@ export function AddUser() {
   );
 }
 
-export function UpdateUser({ id }: { id: string }) {
+interface UserProps {
+  id: string;
+  row: any;
+}
+
+export const UpdateUser: React.FC<UserProps> = ({ id, row }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -66,21 +70,25 @@ export function UpdateUser({ id }: { id: string }) {
           },
         }}
       >
-        {/* Edit */}
       </Button>
-      <UserModal open={open} onClose={handleClose} onSubmit={handleSubmit} initialData={{ id }} />
+      <UserModal open={open} onClose={handleClose} onSubmit={handleSubmit} id={id} row={row} />
     </>
   );
 }
 
-export function DeleteUser({ id }: { id: string }) {
+interface UserStatusProps {
+  id: string;
+  curStatus: number;
+}
+
+export const UserStatus: React.FC<UserStatusProps> = ({ id, curStatus }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleConfirm = () => {
-    console.log('User Deactivated:', id);
+    console.log('User Status Changed:', id);
     handleClose();
   };
 
@@ -90,9 +98,10 @@ export function DeleteUser({ id }: { id: string }) {
         variant="outlined"
         color="secondary"
         onClick={handleOpen}
-        startIcon={<TrashIcon className="w-5" />}
+        startIcon={curStatus === 1 ? <TrashIcon className="w-5" /> : <StarIcon className="w-5" />}
         sx={{
-          p: 1, pr: 0,
+          p: 1,
+          pr: 0,
           backgroundColor: `${theme.palette.warning.main} !important`,
           color: `${theme.palette.text.primary} !important`,
           borderColor: `${theme.palette.text.primary} !important`,
@@ -102,9 +111,8 @@ export function DeleteUser({ id }: { id: string }) {
           },
         }}
       >
-        {/* Deactivate */}
       </Button>
-      <DeactivateModal open={open} onClose={handleClose} onConfirm={handleConfirm} />
+      <UserStatusModal open={open} onClose={handleClose} onConfirm={handleConfirm} userId={id} curStatus={curStatus} />
     </>
   );
-}
+};

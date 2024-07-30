@@ -30,4 +30,4 @@ export default async function Page({
             <UserDataGrid users={users} filterId={searchParams?.id} />
         </Container>
     );
-}
+} 

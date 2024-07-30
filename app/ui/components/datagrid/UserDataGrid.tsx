@@ -8,7 +8,8 @@ import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
 import DataGridExporter from './DataGridExporter';
 import { User } from '@/app/lib/definitions';
-import { AddUser, UpdateUser, DeleteUser } from '@/app/ui/users/buttons';
+import { AddUser, UpdateUser, UserStatus } from '@/app/ui/users/buttons';
+import Image from 'next/image';
 
 interface UserDataGridProps {
     users: User[];
@@ -30,10 +31,12 @@ const columns: GridColDef[] = [
         flex: 0.2,
         sortable: false,
         renderCell: (params) => (
-            <img
+            <Image
                 src={params.value}
                 alt="Avatar"
-                style={{ width: '35px', height: '35px', borderRadius: '50%', marginTop: '8px' }}
+                width={35}
+                height={35}
+                style={{ borderRadius: '50%', marginTop: '8px', maxWidth: 35, maxHeight: 35 }}
             />
         ),
     },
@@ -65,9 +68,9 @@ const columns: GridColDef[] = [
         flex: .75,
         sortable: false,
         renderCell: (params) => (
-            <Box sx={{ display: 'flex', p: 1 }}>
-                <UpdateUser id={params.row.id} />
-                <DeleteUser id={params.row.id} />
+            <Box sx={{ display: 'flex', pt: .75 }}>
+                <UpdateUser id={params.row.id} row={params.row} />
+                <UserStatus id={params.row.id} curStatus={params.row.active === 'Yes' ? 1 : 0} />
             </Box>
         ),
     },

@@ -5,10 +5,20 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache'; //clear this cache that stores the route segments in the user's browser and trigger a new request to the server\\
 import { redirect } from 'next/navigation';
-import {
-    User
-} from '../definitions';
+import { User, UserRole } from '../definitions';
 import { unstable_noStore as noStore } from 'next/cache';
+
+export async function fetchUserRoles() {
+    noStore();
+    try {
+        const data = await sql<UserRole>`SELECT id, role, display FROM user_roles ORDER BY role ASC`;
+        const users = data.rows;
+        return users;
+    } catch (err) {
+        console.error('Database Error:', err);
+        throw new Error('Failed to fetch all rolls.');
+    }
+}
 
 export async function fetchUsers() {
     noStore();
@@ -156,13 +166,12 @@ export async function updateUser(id: string, prevState: State, formData: FormDat
     redirect('/navigation/users');
 }
 
-export async function deleteUser(id: string) {
-    // throw new Error('Failed to Delete User');
+export async function setUserStatus(id: string, active: number) {
     try {
-        await sql`DELETE FROM users WHERE id = ${id}`;
+        await sql`UPDATE users set active = ${active} WHERE id = ${id}`;
         revalidatePath('/navigation/users'); //triggers a new server request and re-render the table\\
-        return { message: 'Deleted User.' };
+        return { message: 'User Status Updated' };
     } catch (error) {
-        return { message: 'Database Error: Failed to Delete User.' };
+        return { message: 'Database Error: Failed to Update User.' };
     }
 }  

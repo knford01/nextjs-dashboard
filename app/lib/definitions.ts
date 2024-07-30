@@ -13,6 +13,12 @@ export type User = {
   active: string;
 };
 
+export type UserRole = {
+  id: number;
+  role: string;
+  display: string;
+};
+
 export type Customer = {
   id: string;
   name: string;
