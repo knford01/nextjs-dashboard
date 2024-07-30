@@ -2,17 +2,17 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef, GridCellParams } from '@mui/x-data-grid';
 import Tooltip from '@mui/material/Tooltip';
-import DataGridExporter from './DataGridExporter';
-import { User } from '@/app/lib/definitions';
-import { AddUser, UpdateUser, UserStatus } from '@/app/ui/users/buttons';
 import Image from 'next/image';
+import { User } from '@/app/lib/definitions';
+import { fetchUsers } from '@/app/lib/data/user-data';
+import DataGridExporter from './DataGridExporter';
+import { AddUser, UpdateUser, UserStatus } from '@/app/ui/users/buttons';
 
 interface UserDataGridProps {
-    users: User[];
     filterId?: string;
 }
 
@@ -24,60 +24,18 @@ const copyToClipboard = (text: string) => {
     });
 };
 
-const columns: GridColDef[] = [
-    {
-        field: 'avatar',
-        headerName: '',
-        flex: 0.2,
-        sortable: false,
-        renderCell: (params) => (
-            <Image
-                src={params.value}
-                alt="Avatar"
-                width={35}
-                height={35}
-                style={{ borderRadius: '50%', marginTop: '8px', maxWidth: 35, maxHeight: 35 }}
-            />
-        ),
-    },
-    {
-        field: 'first_name',
-        headerName: 'First Name',
-        flex: 1,
-    },
-    {
-        field: 'last_name',
-        headerName: 'Last Name',
-        flex: 1,
-    },
-    {
-        field: 'email',
-        headerName: 'Email',
-        type: 'string',
-        flex: 1.5,
-    },
-    {
-        field: 'active',
-        headerName: 'Active',
-        type: 'string',
-        flex: 0.5,
-    },
-    {
-        field: 'actions',
-        headerName: 'Actions',
-        flex: .75,
-        sortable: false,
-        renderCell: (params) => (
-            <Box sx={{ display: 'flex', pt: .75 }}>
-                <UpdateUser id={params.row.id} row={params.row} />
-                <UserStatus id={params.row.id} curStatus={params.row.active === 'Yes' ? 1 : 0} />
-            </Box>
-        ),
-    },
-];
-
-const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {
+const UserDataGrid: React.FC<UserDataGridProps> = ({ filterId }) => {
+    const [users, setUsers] = useState<User[]>([]);
     const [tooltipInfo, setTooltipInfo] = useState<{ rowId: string | number, field: string } | null>(null);
+
+    useEffect(() => {
+        loadUsers();
+    });
+
+    const loadUsers = useCallback(async () => {
+        const usersData = await fetchUsers();
+        setUsers(usersData);
+    }, []);
 
     const handleCellClick = (params: GridCellParams) => {
         if (params.field !== 'avatar' && params.value) {
@@ -103,6 +61,64 @@ const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {
         );
     };
 
+    const columns: GridColDef[] = [
+        {
+            field: 'avatar',
+            headerName: '',
+            flex: 0.2,
+            sortable: false,
+            renderCell: (params) => (
+                <Image
+                    src={params.value}
+                    alt="Avatar"
+                    width={35}
+                    height={35}
+                    style={{ borderRadius: '50%', marginTop: '8px', maxWidth: 35, maxHeight: 35 }}
+                />
+            ),
+        },
+        {
+            field: 'first_name',
+            headerName: 'First Name',
+            flex: 1,
+        },
+        {
+            field: 'last_name',
+            headerName: 'Last Name',
+            flex: 1,
+        },
+        {
+            field: 'email',
+            headerName: 'Email',
+            type: 'string',
+            flex: 1.5,
+        },
+        {
+            field: 'role_display',
+            headerName: 'Role',
+            type: 'string',
+            flex: 1,
+        },
+        {
+            field: 'active',
+            headerName: 'Active',
+            type: 'string',
+            flex: 0.5,
+        },
+        {
+            field: 'actions',
+            headerName: 'Actions',
+            flex: .75,
+            sortable: false,
+            renderCell: (params) => (
+                <Box sx={{ display: 'flex', pt: .75 }}>
+                    <UpdateUser id={params.row.id} row={params.row} loadUsers={loadUsers} />
+                    <UserStatus id={params.row.id} curStatus={params.row.active === 'Yes' ? 1 : 0} loadUsers={loadUsers} />
+                </Box>
+            ),
+        },
+    ];
+
     const updatedColumns = columns.map((col) => ({
         ...col,
         renderCell: col.field !== 'avatar' && col.field !== 'actions' ? renderCell : col.renderCell,
@@ -114,7 +130,7 @@ const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {
                 <Box sx={{ display: 'flex', gap: 1 }}>
                     <DataGridExporter data={users} fileName="users_export.xlsx" />
                 </Box>
-                <AddUser />
+                <AddUser loadUsers={loadUsers} />
             </Box>
             <DataGrid
                 sx={{
@@ -152,7 +168,7 @@ const UserDataGrid: React.FC<UserDataGridProps> = ({ users, filterId }) => {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 5,
+                            pageSize: 10,
                         },
                     },
                 }}

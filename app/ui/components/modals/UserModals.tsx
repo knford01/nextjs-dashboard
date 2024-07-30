@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Menu, MenuItem, Modal, TextField, Typography, Select, InputLabel, FormControl } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import { setUserStatus } from '@/app/lib/data/user-data';
-import { fetchUserRoles } from '@/app/lib/data/user-data';
+// app/ui/components/modals/UserModals.tsx
 
+import React, { useState, useEffect } from 'react';
+import { Box, Button, MenuItem, Modal, TextField, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { setUserStatus, fetchUserRoles, createUser, updateUser } from '@/app/lib/data/user-data';
 
 interface UserModalProps {
     open: boolean;
@@ -17,6 +17,7 @@ export const UserModal: React.FC<UserModalProps> = ({ open, onClose, onSubmit, i
     const theme = useTheme();
     const [formData, setFormData] = useState(row || {});
     const [roles, setRoles] = useState<{ id: number, display: string }[]>([]);
+    const [errors, setErrors] = useState({ first_name: false, last_name: false, email: false, password: false, role: false });
 
     useEffect(() => {
         setFormData(row || {});
@@ -25,7 +26,6 @@ export const UserModal: React.FC<UserModalProps> = ({ open, onClose, onSubmit, i
     useEffect(() => {
         const fetchRoles = async () => {
             const roles = await fetchUserRoles();
-            // console.log(roles);
             setRoles(roles);
         };
         fetchRoles();
@@ -33,11 +33,6 @@ export const UserModal: React.FC<UserModalProps> = ({ open, onClose, onSubmit, i
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = () => {
-        onSubmit(formData);
-        onClose();
     };
 
     const commonTextFieldStyles = {
@@ -109,18 +104,115 @@ export const UserModal: React.FC<UserModalProps> = ({ open, onClose, onSubmit, i
         return '';
     };
 
+    const handleSubmit = async () => {
+        const newErrors = {
+            first_name: !formData.first_name,
+            last_name: !formData.last_name,
+            email: !formData.email,
+            password: !formData.password,
+            role: !formData.role,
+        };
+        setErrors(newErrors);
+
+        if (!Object.values(newErrors).some(error => error)) {
+            const data = {
+                ...formData,
+                active: getActiveValue(),
+            };
+
+            if (id) {
+                await updateUser(id, data);
+            } else {
+                await createUser(data);
+            }
+
+            onSubmit(data);
+            onClose();
+        }
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                setFormData({ ...formData, avatar: reader.result as string });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     return (
         <Modal open={open} onClose={onClose}>
-            <Box sx={{ padding: 4, backgroundColor: `${theme.palette.background.paper} !important`, margin: 'auto', mt: '20vh', width: 400, borderRadius: 2 }}>
+            <Box sx={{ padding: 4, backgroundColor: `${theme.palette.background.paper} !important`, margin: 'auto', mt: '6vh', width: 400, borderRadius: 2 }}>
                 <Typography sx={{ mb: 1, textAlign: 'center', fontWeight: 'bold', color: `${theme.palette.primary.main} !important` }} variant="h6">{id ? 'Edit User' : 'Add User'}</Typography>
 
-                <TextField label="First Name" name="first_name" value={formData.first_name || ''} onChange={handleChange} fullWidth {...commonTextFieldStyles} />
-                <TextField label="Middle Name" name="middle_name" value={formData.middle_name || ''} onChange={handleChange} fullWidth {...commonTextFieldStyles} />
-                <TextField label="Last Name" name="last_name" value={formData.last_name || ''} onChange={handleChange} fullWidth {...commonTextFieldStyles} />
-                <TextField label="Email" name="email" value={formData.email || ''} onChange={handleChange} fullWidth {...commonTextFieldStyles} />
-                <TextField label="Password" name="password" value={formData.password || ''} onChange={handleChange} fullWidth {...commonTextFieldStyles} />
+                <TextField
+                    label="First Name"
+                    name="first_name"
+                    value={formData.first_name || ''}
+                    onChange={handleChange}
+                    required
+                    error={errors.first_name}
+                    helperText={errors.first_name ? 'First name is required' : ''}
+                    fullWidth
+                    {...commonTextFieldStyles}
+                />
+                <TextField
+                    label="Middle Name"
+                    name="middle_name"
+                    value={formData.middle_name || ''}
+                    onChange={handleChange}
+                    fullWidth
+                    {...commonTextFieldStyles}
+                />
+                <TextField
+                    label="Last Name"
+                    name="last_name"
+                    value={formData.last_name || ''}
+                    onChange={handleChange}
+                    required
+                    error={errors.last_name}
+                    helperText={errors.last_name ? 'Last name is required' : ''}
+                    fullWidth
+                    {...commonTextFieldStyles}
+                />
+                <TextField
+                    label="Email"
+                    name="email"
+                    value={formData.email || ''}
+                    onChange={handleChange}
+                    required
+                    error={errors.email}
+                    helperText={errors.email ? 'Email is required' : ''}
+                    fullWidth
+                    {...commonTextFieldStyles}
+                />
 
-                <TextField select label="Roll" name="roll" value={formData.roll || ''} onChange={handleChange} fullWidth {...selectTextFieldStyles}>
+                <TextField
+                    label="Password"
+                    name="password"
+                    value={formData.password || ''}
+                    onChange={handleChange}
+                    required
+                    error={errors.password}
+                    helperText={errors.password ? 'Password is required' : ''}
+                    fullWidth
+                    {...commonTextFieldStyles}
+                />
+
+                <TextField
+                    select
+                    label="Role"
+                    name="role"
+                    value={formData.role || ''}
+                    onChange={handleChange}
+                    required
+                    error={errors.role}
+                    helperText={errors.role ? 'Role is required' : ''}
+                    fullWidth
+                    {...selectTextFieldStyles}
+                >
                     {roles.map(role => (
                         <MenuItem key={role.id} value={role.id}>
                             {role.display}
@@ -128,10 +220,22 @@ export const UserModal: React.FC<UserModalProps> = ({ open, onClose, onSubmit, i
                     ))}
                 </TextField>
 
-                <TextField select label="Active" name="active" value={getActiveValue()} onChange={handleChange} fullWidth {...selectTextFieldStyles}>
-                    <MenuItem value="1">Yes</MenuItem>
-                    <MenuItem value="0">No</MenuItem>
-                </TextField>
+                {formData.avatar && (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+                        <img
+                            src={formData.avatar}
+                            alt="Avatar"
+                            style={{ width: '150px', height: '150px', borderRadius: '50%', border: `2px solid ${theme.palette.primary.main}`, imageRendering: 'auto' }}
+                        />
+                    </Box>
+                )}
+
+                <Box sx={{ m: 2 }}>
+                    <Button variant="contained" component="label" fullWidth sx={{ backgroundColor: `${theme.palette.info.main} !important`, color: `${theme.palette.text.primary} !important`, '&:hover': { backgroundColor: `${theme.palette.info.dark} !important` } }}>
+                        Upload New Image
+                        <input type="file" hidden onChange={handleFileChange} />
+                    </Button>
+                </Box>
 
                 <Box sx={{ pt: 3, display: 'flex', justifyContent: 'center', gap: 2 }}>
                     <Button variant="contained" sx={{ backgroundColor: `${theme.palette.success.main} !important`, color: `${theme.palette.text.primary} !important`, '&:hover': { backgroundColor: `${theme.palette.success.dark} !important` } }} onClick={handleSubmit}>

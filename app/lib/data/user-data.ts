@@ -1,6 +1,7 @@
 // app/lib/data/user-data.tsx
 
 'use server';
+import bcrypt from 'bcrypt';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache'; //clear this cache that stores the route segments in the user's browser and trigger a new request to the server\\
@@ -25,16 +26,20 @@ export async function fetchUsers() {
     try {
         const data = await sql<User>` 
         SELECT
-          id,
-          first_name,
-          last_name,
-          avatar,
-          email, 
+          u.id,
+          u.first_name,
+          u.last_name,
+          u.avatar,
+          u.role,
+          ur.display as role_display,
+          u.email, 
+          'Enter New Password to Change' as password,
           case
-            when active = 1 then 'Yes'
+            when u.active = 1 then 'Yes'
             else 'No'
           end as active
-        FROM users
+        FROM users u
+        left join user_roles ur on ur.id = u.role
         ORDER BY first_name ASC`;
 
         const users = data.rows;
@@ -58,112 +63,51 @@ export async function fetchUserById(id: string) {
         WHERE id = ${id};`;
 
         return data;
-
-        //May need to do it this way later\\
-        // const user = data.rows.map((user) => ({
-        //     ...user
-        // }));
-
-        // return user[0];
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch user.');
     }
 }
 
-//This schema will validate the formData before saving it to a database\\
-const FormSchema = z.object({
-    id: z.string(),
-    customerId: z.string({ invalid_type_error: 'Please select a customer.', }),
-    amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }),
-    status: z.enum(['pending', 'paid'], {
-        invalid_type_error: 'Please select an user status.',
-    }),
-    date: z.string(),
-});
+const saltRounds = 10;
 
-export type State = {
-    errors?: {
-        customerId?: string[];
-        amount?: string[];
-        status?: string[];
-    };
-    message?: string | null;
-};
+export async function createUser(data: any) {
+    // console.log(data);
+    const hashedPassword = await bcrypt.hash(data.password, saltRounds);
 
-const CreateUser = FormSchema.omit({ id: true, date: true });
-export async function createUser(prevState: State, formData: FormData) {
-    //const rawFormData = Object.fromEntries(formData.entries()) -- For forms with many fields\\
-    //const { customerId, amount, status } = CreateUser.parse({
-
-    // Validate form fields using Zod
-    const validatedFields = CreateUser.safeParse({
-        customerId: formData.get('customerId'),
-        amount: formData.get('amount'),
-        status: formData.get('status'),
-    });
-
-    // If form validation fails, return errors early. Otherwise, continue.
-    if (!validatedFields.success) {
-        return {
-            errors: validatedFields.error.flatten().fieldErrors,
-            message: 'Missing Fields. Failed to Create User.',
-        };
-    }
-
-    // Prepare data for insertion into the database
-    const { customerId, amount, status } = validatedFields.data;
-    const amountInCents = amount * 100;
-    const date = new Date().toISOString().split('T')[0];
-
-    // Insert data into the database
     try {
         await sql`
-     INSERT INTO users (customer_id, amount, status, date)
-     VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-   `;
+            INSERT INTO users 
+                (first_name, middle_name, last_name, email, password, role, avatar, active)
+            VALUES 
+                (${data.first_name || ''}, ${data.middle_name || ''}, ${data.last_name || ''}, ${data.email || ''}, ${hashedPassword || ''}, ${data.role || ''}, ${data.avatar || ''}, 1)
+        `;
     } catch (error) {
-        // If a database error occurs, return a more specific error.
-        return {
-            message: 'Database Error: Failed to Create User.',
-        };
+        throw new Error('Failed to Create User');
     }
-
-    // Revalidate the cache for the users page and redirect the user.
-    revalidatePath('/navigation/users');
-    redirect('/navigation/users');
 }
 
-const UpdateUser = FormSchema.omit({ id: true, date: true });
-export async function updateUser(id: string, prevState: State, formData: FormData) {
-    const validatedFields = UpdateUser.safeParse({
-        customerId: formData.get('customerId'),
-        amount: formData.get('amount'),
-        status: formData.get('status'),
-    });
-
-    if (!validatedFields.success) {
-        return {
-            errors: validatedFields.error.flatten().fieldErrors,
-            message: 'Missing Fields. Failed to Update User.',
-        };
-    }
-
-    const { customerId, amount, status } = validatedFields.data;
-    const amountInCents = amount * 100;
+export async function updateUser(id: string, data: any) {
+    // console.log(data);
 
     try {
-        await sql`
-        UPDATE users
-        SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
-        WHERE id = ${id}
-      `;
+        if (data.password != 'Enter New Password to Change') {
+            const hashedPassword = await bcrypt.hash(data.password, saltRounds);
+            await sql`
+            UPDATE users
+            SET first_name = ${data.first_name}, middle_name = ${data.middle_name}, last_name = ${data.last_name}, 
+            email = ${data.email}, password = ${hashedPassword}, role = ${data.role}, avatar = ${data.avatar}
+            WHERE id = ${id}`;
+        } else {
+            await sql`
+            UPDATE users
+            SET first_name = ${data.first_name}, middle_name = ${data.middle_name}, last_name = ${data.last_name}, 
+            email = ${data.email},  role = ${data.role}, avatar = ${data.avatar}
+            WHERE id = ${id}`;
+        }
     } catch (error) {
-        return { message: 'Database Error: Failed to Update User.' };
+        throw new Error('Database Error: Failed to Update User.');
     }
-
-    revalidatePath('/navigation/users');
-    redirect('/navigation/users');
 }
 
 export async function setUserStatus(id: string, active: number) {

@@ -6,14 +6,20 @@ import { useTheme } from '@mui/material/styles';
 import { PencilIcon, PlusIcon, TrashIcon, StarIcon } from '@heroicons/react/24/outline';
 import { UserModal, UserStatusModal } from '../components/modals/UserModals';
 
-export function AddUser() {
+interface AddUserProps {
+  loadUsers: () => void;
+}
+
+export const AddUser: React.FC<AddUserProps> = ({ loadUsers }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleSubmit = (data: any) => {
-    console.log('Add User Data:', data);
+    // console.log('Add User Data:', data);
+    loadUsers();
+    handleClose();
   };
 
   return (
@@ -37,12 +43,13 @@ export function AddUser() {
   );
 }
 
-interface UserProps {
+interface UpdateUserProps {
   id: string;
   row: any;
+  loadUsers: () => void;
 }
 
-export const UpdateUser: React.FC<UserProps> = ({ id, row }) => {
+export const UpdateUser: React.FC<UpdateUserProps> = ({ id, row, loadUsers }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -50,6 +57,8 @@ export const UpdateUser: React.FC<UserProps> = ({ id, row }) => {
   const handleClose = () => setOpen(false);
   const handleSubmit = (data: any) => {
     console.log('Update User Data:', data);
+    loadUsers();
+    handleClose();
   };
 
   return (
@@ -79,9 +88,10 @@ export const UpdateUser: React.FC<UserProps> = ({ id, row }) => {
 interface UserStatusProps {
   id: string;
   curStatus: number;
+  loadUsers: () => void;
 }
 
-export const UserStatus: React.FC<UserStatusProps> = ({ id, curStatus }) => {
+export const UserStatus: React.FC<UserStatusProps> = ({ id, curStatus, loadUsers }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
 
@@ -89,6 +99,7 @@ export const UserStatus: React.FC<UserStatusProps> = ({ id, curStatus }) => {
   const handleClose = () => setOpen(false);
   const handleConfirm = () => {
     console.log('User Status Changed:', id);
+    loadUsers();
     handleClose();
   };
 

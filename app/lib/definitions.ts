@@ -9,7 +9,7 @@ export type User = {
   last_name: string;
   email: string;
   password: string;
-  roll: string;
+  role: string;
   active: string;
 };
 
