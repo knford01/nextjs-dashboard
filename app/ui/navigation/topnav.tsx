@@ -80,4 +80,4 @@ const TopNav: FC<TopNavProps> = ({ collapsed }) => {
     );
 };
 
-export default TopNav; 
+export default TopNav;  

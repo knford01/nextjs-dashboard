@@ -48,12 +48,16 @@ export default function NavLinks({ collapsed }: { collapsed: boolean }) {
                   color: theme.palette.text.secondary,
                 },
                 transition: 'background-color 0.3s, color 0.3s',
+                borderRadius: 2,
+                marginLeft: 1,
+                marginRight: 1,
+                marginBottom: 1,
               }}
               className={clsx({
                 'hover:text-white': pathname === link.href,
               })}
             >
-              <LinkIcon className="w-6 ml-4 mr-4" />
+              <LinkIcon className="w-6 ml-3" />
               {!collapsed && <p className="md:block">{link.name}</p>}
             </Box>
           </Tooltip>

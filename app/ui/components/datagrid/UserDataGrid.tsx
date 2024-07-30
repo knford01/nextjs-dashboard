@@ -30,7 +30,15 @@ const UserDataGrid: React.FC<UserDataGridProps> = ({ filterId }) => {
 
     useEffect(() => {
         loadUsers();
-    });
+        console.log('UseEffect');
+    }, []);
+
+    const interval = setInterval(() => {
+        console.log('setInterval');
+
+        loadUsers();
+        return () => clearInterval(interval); // Cleanup interval on unmount
+    }, 25000); // 25 seconds
 
     const loadUsers = useCallback(async () => {
         const usersData = await fetchUsers();

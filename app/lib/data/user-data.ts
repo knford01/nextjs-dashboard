@@ -118,4 +118,14 @@ export async function setUserStatus(id: string, active: number) {
     } catch (error) {
         return { message: 'Database Error: Failed to Update User.' };
     }
+}
+
+export async function setUserTheme(id: string, theme: string) {
+    try {
+        await sql`UPDATE users set theme = ${theme} WHERE id = ${id}`;
+        revalidatePath('/navigation/users');
+        return { message: 'User Theme Updated' };
+    } catch (error) {
+        return { message: 'Database Error: Failed to Update Theme.' };
+    }
 }  
